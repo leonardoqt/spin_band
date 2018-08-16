@@ -20,6 +20,8 @@ int main()
 	label_d = "SPIN DOWN";
 	label_electron = "number of electrons";
 	label_END = "JOB DONE";
+	// get fermi level from head of file
+	cin >> fermi;
 	getline(cin,tmp);
 	while(tmp.find(label_electron) == string::npos)
 		getline(cin,tmp);
@@ -140,7 +142,14 @@ int main()
 		dkx1=dkx2,dky1=dky2,dkz1=dkz2,dk1=dk2;
 	}
 
+// normalize x
+	for (t1=0; t1< nhsp; t1++)
+		hsp[t1] /= x[nkpoint-1];
+	for (t1=0; t1< nkpoint; t1++)
+		x[t1] /= x[nkpoint-1];
+
 //find fermi level?
+/*
 	for(maxe=-10000,mine=10000,t1=0; t1 < nkpoint; t1++)
 	{
 		if(band_u[fillbd][t1] > maxe) maxe = band_u[fillbd][t1];
@@ -149,6 +158,7 @@ int main()
 		if(band_d[fillbd+1][t1] < mine) mine = band_d[fillbd+1][t1];
 	}
 	fermi = (maxe+mine)/2;
+*/
 	cout<<"# Number of electrons = "<<nele<<endl;
 	cout<<"# Number of bands = "<<fnband<<endl;
 	cout<<"# VBM = "<<maxe<<'\t'<<"CBM = "<<mine<<endl;
